@@ -1,0 +1,16 @@
+Einen Schlachtplan erstellen für Python/openITI/adhtools
+	Cache, um nicht immer das neu requesten zu müssen (request cache?)
+	Wie die Daten ablegen?
+	Algorithmus zum Abspeichern und Einlesen von Daten
+	Github kennen lernen
+	Software testen
+	Klassen
+
+
+Networkanalysis
+Stylometry: Introduction to stylometry with Python (https://programminghistorian.org/en/lessons/introduction-to-stylometry-with-python)
+
+
+JB ein Update schreiben
+
+
