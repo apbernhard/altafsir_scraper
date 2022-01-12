@@ -14,4 +14,8 @@ Stylometry: Introduction to stylometry with Python (https://programminghistorian
 JB ein Update schreiben
 
 
-Alles besser machen
+1. Seitenaufbau analysieren
+2. Scrapen
+3. Bereinigen
+4. Analysieren
+5. Visualisieren
