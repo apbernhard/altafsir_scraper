@@ -3,7 +3,7 @@
 
 def get_soup(TafsirId, Sura, Aya, page=1):
     """Fetch source code for any given page for TafsirID, Sura and Aya
-       returns bs4.BeautifulSoup object"""
+       returns: bs4.BeautifulSoup object"""
 
     from bs4 import BeautifulSoup
     from requests import get
@@ -12,14 +12,14 @@ def get_soup(TafsirId, Sura, Aya, page=1):
     # get link and soupify
     response = get(link)
     soup = BeautifulSoup(response.content, 'html.parser')
-    
+
     # returns soup
     return soup
 
 
 def tafsir_getter(TafsirId, Sura, Aya, page):
     """filters source code for actual tafsir content
-       returns bs4.element.Tag object """
+       returns: bs4.element.Tag object """
 
     # retreive Data
     soup = get_soup(TafsirId, Sura, Aya, page).select_one("#SearchResults div")
@@ -27,13 +27,13 @@ def tafsir_getter(TafsirId, Sura, Aya, page):
     # filter soup for desired content
     if soup.find("center") != None:
         soup.center.decompose()
-    
+
     soup.label.decompose()
-    
+
     # break if last page
     if len(soup.text) == 2:
         return "Last Page"
-    
+
     # return soup
     else:
         return soup
@@ -41,7 +41,7 @@ def tafsir_getter(TafsirId, Sura, Aya, page):
 
 def tafsir_entry_pager(TafsirId, Sura, Aya):
     """tool needed to paginate through the JavaScript generated subpages for each SearchResult for a given passage
-       returns list object"""
+       returns: list object containing all subpages"""
 
     list = []
     i = 1
@@ -50,58 +50,57 @@ def tafsir_entry_pager(TafsirId, Sura, Aya):
         # if return value of tafsir_getter == "Last Page"
         if x != "Last Page":
             list.append(x)
-            i +=1
+            i += 1
         else:
             break
     return list
 
 
-def tafsir_metadata(TafsirId, Sura, Aya):
-    """Tool fetching metadata on entry
-       returns pandas.Series object"""
+def collect_data(TafsirId, Sura, Aya):
+    """collects given Aya from Sura from a specified Tafsir
+       returns: string"""
 
     import pandas as pd
 
-    soup = get_soup(TafsirId, Sura, Aya, 1)
-
-    # Receive data and store in dict
-    metadata = {}
-    metadata["TafsirId"] = TafsirId
-    metadata["Sura"] = Sura
-    metadata["Aya"] = Aya
-    metadata['Description'] = soup.find("meta", attrs={'name': 'description'})['content']
-    metadata['Keywords'] = soup.find("meta", attrs={'name': 'keywords'})['content'].strip().split(",")[1:]
-
-    # convert dict to 
-    data = pd.Series(metadata)
-    
-    # returns pd.Series
-    return data
-
-
-def collect_data(TafsirId, Sura, Aya):
-    """collects metadata and contents for given Sura and Aya from a specified Tafsir
-       returns pandas.Series object with SoupContent as list of bs4.element.Tag objects"""
-    
     # check validity of request
     if get_soup(TafsirId, Sura, Aya, 1).select_one("#SearchResults div") == None:
         print("invalid object: check if TafsirId, Sura and Aya are within range!")
         return None
 
-    # if request is valid save in Dataframe
+    # if request is valid proceed
     else:
-        data = tafsir_metadata(TafsirId, Sura, Aya)
-        data["SoupContent"] = tafsir_entry_pager(TafsirId, Sura, Aya)
-                
-        # returns Series
+        data = tafsir_entry_pager(TafsirId, Sura, Aya)
+        # join list entries to plain text
+        data = "\n".join([i for i in [i.get_text().strip() for i in data]])
+        # returns list
         return data
 
 
+def write_data(data, TafsirId, Sura, Aya):
+    """extracts scraping result to text file
+       returns: None"""
+
+    # Extracts Text from HTML and saves to file
+    print(f"Writing to {TafsirId}_{Sura}_{Aya}.txt")
+    with open(f"{TafsirId}_{Sura}_{Aya}.txt", "w", encoding="utf-8") as f:
+        f.write(data)
+    print("Saved file successfully")
+    return None
+
+
 def runscript():
-    print("fetching exemplary data...")
-    return collect_data(1, 1, 7)
+    # Input prompt
+    TafsirId = int(input("Input TafsirId: "))
+    Sura = int(input("Input Sura: "))
+    Aya = int(input("Input Aya: "))
+
+    print(f"fetching Sura {Sura}, Aya {Aya} from Tafsir {TafsirId}...")
+    data = collect_data(TafsirId, Sura, Aya)
+
+    print("writing data to file...")
+    write_data(data, TafsirId, Sura, Aya)
+    return data
 
 
 if __name__ == "__main__":
     runscript()
-
