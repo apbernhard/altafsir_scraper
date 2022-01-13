@@ -21,7 +21,7 @@ Anschließend möglich:
 	Weitere Analysen mit:
 	adhtools
 	weitere Parser
-
+	Regex um Korazitate rauszulöschen?
 
 Hinweis zu sonstigem
 	OpenITI/al-Kitab-Project
