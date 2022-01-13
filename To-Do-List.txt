@@ -1,23 +1,37 @@
-Einen Schlachtplan erstellen für Python/openITI/adhtools
-	Cache, um nicht immer das neu requesten zu müssen (request cache?)
-	Wie die Daten ablegen?
+
+Notebook
+	Beispieldateien cachen, um bei requestproblemen trotzdem arbeiten zu können (request cache?)
+	Scrape-Pause
+	Wie sollen die Daten abgelegt werden?
 	Algorithmus zum Abspeichern und Einlesen von Daten
-	Github kennen lernen
-	Software testen
-	Klassen
+	Integration von Klassen?
+	Exception handling?
+	Testen von Software
 
 
 Networkanalysis
-Stylometry: Introduction to stylometry with Python (https://programminghistorian.org/en/lessons/introduction-to-stylometry-with-python)
+	Stylometry: Introduction to stylometry with Python (https://programminghistorian.org/en/lessons/introduction-to-stylometry-with-python)
 
-
-JB ein Update schreiben
-
-
-Alles besser machen
 
 Hinweis für letzte Folie:
-weiteres Textmaterial im OpenITI/al-Kitab-Project
+	Vorverarbeitung
 
-Stephen und Laura Koch zur Durchsicht schicken
-<Laura.Koch-v89@ruhr-uni-bochum.de>
+Anschließend möglich:
+	Textmaterial in OpenITI Markup überführen zur Annotation
+	Weitere Analysen mit:
+	adhtools
+	weitere Parser
+
+
+Hinweis zu sonstigem
+	OpenITI/al-Kitab-Project
+
+Notebooks zum Testen an:
+	Stephen und Laura Koch zur Durchsicht schicken
+	<Laura.Koch-v89@ruhr-uni-bochum.de>
+
+
+
+
+madhahib_df = pd.read_csv("./data/madhahib.csv", sep="\t", index_col=0)
+tafasir_df = pd.read_csv("./data/tafasir.csv", sep="\t", index_col=0)
