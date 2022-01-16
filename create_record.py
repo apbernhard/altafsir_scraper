@@ -1,105 +1,114 @@
 """toolset for extracting specific passages from the corpus provided on altafsir.com"""
 
 
-def get_soup(TafsirId, Sura, Aya, page=1):
-    """Fetch source code for any given page for TafsirID, Sura and Aya
-       returns: bs4.BeautifulSoup object"""
+# Creating a Base class
+class altafsir_extractor:
+    def __init__(self, TafsirId, Sura, Aya):
+        self.TafsirId = TafsirId
+        self.Sura = Sura
+        self.Aya = Aya
+        self.Code = ""
+        self.Text = ""
 
-    from bs4 import BeautifulSoup
-    from requests import get
+# Declaring public methods
+    def collect_data(self):
+        """collects given Aya from Sura from a specified Tafsir
+           returns: string"""
 
-    link = f"https://www.altafsir.com/Tafasir.asp?tMadhNo=0&tTafsirNo={TafsirId}&tSoraNo={Sura}&tAyahNo={Aya}&tDisplay=yes&Page={page}&UserProfile=0&LanguageId=1"
-    # get link and soupify
-    response = get(link)
-    soup = BeautifulSoup(response.content, 'html.parser')
+        # check validity of request
+        if self.__get_soup(1).select_one("#SearchResults div") == None:
+            print("invalid object: check if TafsirId, Sura and Aya are within range!")
+            return "collect not successful"
 
-    # returns soup
-    return soup
-
-
-def tafsir_getter(TafsirId, Sura, Aya, page):
-    """filters source code for actual tafsir content
-       returns: bs4.element.Tag object """
-
-    # retreive Data
-    soup = get_soup(TafsirId, Sura, Aya, page).select_one("#SearchResults div")
-
-    # filter soup for desired content
-    if soup.find("center") != None:
-        soup.center.decompose()
-
-    soup.label.decompose()
-
-    # break if last page
-    if len(soup.text) == 2:
-        return "Last Page"
-
-    # return soup
-    else:
-        return soup
-
-
-def tafsir_entry_pager(TafsirId, Sura, Aya):
-    """tool needed to paginate through the JavaScript generated subpages for each SearchResult for a given passage
-       returns: list object containing all subpages"""
-
-    list = []
-    i = 1
-    while True:
-        x = tafsir_getter(TafsirId, Sura, Aya, i)
-        # if return value of tafsir_getter == "Last Page"
-        if x != "Last Page":
-            list.append(x)
-            i += 1
+        # if request is valid proceed
         else:
-            break
-    return list
+            self.Code = self.__tafsir_entry_pager()
+            # join list entries to plain text
+            self.Text = "\n".join(
+                [i for i in [i.get_text().strip() for i in self.Code]])
 
+            return self.Text
 
-def collect_data(TafsirId, Sura, Aya):
-    """collects given Aya from Sura from a specified Tafsir
-       returns: string"""
+    def write_data(self, path="./"):
+        """extracts scraping result to text file
+           returns: None"""
 
-    import pandas as pd
-
-    # check validity of request
-    if get_soup(TafsirId, Sura, Aya, 1).select_one("#SearchResults div") == None:
-        print("invalid object: check if TafsirId, Sura and Aya are within range!")
+        # Extracts Text from HTML and saves to file
+        print(f"Writing to {self.TafsirId}_{self.Sura}_{self.Aya}.txt")
+        with open(f"{path}{self.TafsirId}_{self.Sura}_{self.Aya}.txt", "w", encoding="utf-8") as f:
+            f.write(self.Text)
+        print("Saved file successfully")
         return None
 
-    # if request is valid proceed
-    else:
-        data = tafsir_entry_pager(TafsirId, Sura, Aya)
-        # join list entries to plain text
-        data = "\n".join([i for i in [i.get_text().strip() for i in data]])
-        # returns list
-        return data
+# Declaring private method
+    def __get_soup(self, page=1):
+        """Fetch source code for any given page for TafsirID, Sura and Aya
+           returns: bs4.BeautifulSoup object"""
 
+        from bs4 import BeautifulSoup
+        from requests import get
 
-def write_data(data, TafsirId, Sura, Aya):
-    """extracts scraping result to text file
-       returns: None"""
+        link = f"https://www.altafsir.com/Tafasir.asp?tMadhNo=0&tTafsirNo={self.TafsirId}&tSoraNo={self.Sura}&tAyahNo={self.Aya}&tDisplay=yes&Page={page}&UserProfile=0&LanguageId=1"
+        # get link and soupify
+        response = get(link)
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-    # Extracts Text from HTML and saves to file
-    print(f"Writing to {TafsirId}_{Sura}_{Aya}.txt")
-    with open(f"{TafsirId}_{Sura}_{Aya}.txt", "w", encoding="utf-8") as f:
-        f.write(data)
-    print("Saved file successfully")
-    return None
+        # returns soup
+        return soup
+
+    def __tafsir_getter(self, page):
+        """filters source code for actual tafsir content
+           returns: bs4.element.Tag object """
+        from bs4 import BeautifulSoup
+
+        # retreive Data
+        soup = self.__get_soup(page).select_one("#SearchResults div")
+
+        # filter soup for desired content
+        if soup.find("center") != None:
+            soup.center.decompose()
+
+        soup.label.decompose()
+
+        # break if last page
+        if len(soup.text) == 2:
+            return "Last Page"
+
+        # return soup
+        else:
+            return soup
+
+    def __tafsir_entry_pager(self):
+        """tool needed to paginate through the JavaScript generated subpages for each SearchResult for a given passage
+           returns: list object containing all subpages"""
+
+        list = []
+        i = 1
+        while True:
+            x = self.__tafsir_getter(i)
+            # if return value of tafsir_getter == "Last Page"
+            if x != "Last Page":
+                list.append(x)
+                i += 1
+            else:
+                break
+        return list
 
 
 def runscript():
-    # Input prompt
-    TafsirId = int(input("Input TafsirId: "))
-    Sura = int(input("Input Sura: "))
-    Aya = int(input("Input Aya: "))
+    # User prompt
+    print("Please give following values:")
+    TafsirId = input("TafsirId: ")
+    Sura = input("Sura: ")
+    Aya = input("Aya: ")
 
-    print(f"fetching Sura {Sura}, Aya {Aya} from Tafsir {TafsirId}...")
-    data = collect_data(TafsirId, Sura, Aya)
+    # Fetch data
+    print(f"fetching Tafsir {TafsirId}, Sura {Sura}, Aya {Aya}")
+    object = altafsir_extractor(TafsirId, Sura, Aya)
+    object.collect_data()
 
-    print("writing data to file...")
-    write_data(data, TafsirId, Sura, Aya)
-    return data
+    # Output
+    object.write_data()
 
 
 if __name__ == "__main__":
