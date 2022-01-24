@@ -1,9 +1,21 @@
-	Wie sollen die Dateien abgelegt werden/annotationsfreundliches Format?
-	von Klassen?
-	Exception handling?
-	Testen
+Tasks:
+	Include exception handling
+	Testing
+
+Questions:
+	How to store Data?
 
 
 Daten
 madhahib_df = pd.read_csv("./data/madhahib.csv", sep="\t", index_col=0)
 tafasir_df = pd.read_csv("./data/tafasir.csv", sep="\t", index_col=0)
+
+
+Sollen Zitate aus dem Koran, Eigennamen (Allah, Muhammad, etc.), Segensformeln rausgekürzt werden?
+	Segensformeln können rausgekürzt werden
+	Eigennamen mal beibehalten
+
+Was interessiert uns eigentlich?
+	Verschiedene Versionen: mit Koranzitaten, ohne Koranzitate
+	Ziel: Wortwolke (eine Arabisch, eine Deutsch), die das Profil verschiedener Autoren zeigt
+		Balkendiagramm der Häufigsten Worte

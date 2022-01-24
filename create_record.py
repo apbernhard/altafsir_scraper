@@ -26,10 +26,10 @@ class altafsir_extractor:
             # join list entries to plain text
             self.Text = "\n".join(
                 [i for i in [i.get_text().strip() for i in self.Code]])
+            # returns list
+            return
 
-            return self.Text
-
-    def write_data(self, path="./"):
+    def write_data(self, path="./assets/"):
         """extracts scraping result to text file
            returns: None"""
 

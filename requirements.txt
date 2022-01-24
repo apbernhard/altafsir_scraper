@@ -1,0 +1,7 @@
+###### the following packets can be installed by running pip -r requirements.txt ######
+matplotlib
+camel-tools
+arabic-reshaper
+python-bidi
+wordcloud
+
