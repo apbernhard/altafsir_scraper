@@ -29,7 +29,7 @@ class altafsir_extractor:
             # returns list
             return
 
-    def write_data(self, path="./assets/"):
+    def write_data(self, path="./data/"):
         """extracts scraping result to text file
            returns: None"""
 
