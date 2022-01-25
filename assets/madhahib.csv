@@ -1,12 +1,12 @@
-Id	Madhahib (Ar)	Madhahib (En)
-0	غير محدد	not specified
-1	أمهات التفاسير	the great tafasir
-2	تفاسير أهل السنة	Sunni tafasir
-3	تفاسير أهل السنة الصوفية	Sufi tafasir
-10	تفاسير أهل السنة السلفية	Salafi tafasir
-9	تفاسير ميسرة	muyassara tafasir
-4	تفاسير الشيعة الإثنى عشرية	twelver shiism tafasir
-5	تفاسيرالزيدية	zaydi tafasir
-6	تفاسيرالاباضية	ibadiya tafasir
-7	تفاسير حديثة	modern tafasir
-8	تفاسير مختصرة	short tafasir
+﻿Id;Madhahib (Ar);Madhahib (En)
+0;غير محدد;not specified
+1;أمهات التفاسير;the great tafasir
+2;تفاسير أهل السنة;sunni tafasir
+3;تفاسير أهل السنة الصوفية;sufi tafasir
+4;تفاسير الشيعة الإثنى عشرية;twelver shiism tafasir
+5;تفاسيرالزيدية;zaydi tafasir
+6;تفاسيرالاباضية;ibadiya tafasir
+7;تفاسير حديثة;modern tafasir
+8;تفاسير مختصرة;short tafasir
+9;تفاسير ميسرة;muyassara tafasir
+10;تفاسير أهل السنة السلفية;salafi tafasir
