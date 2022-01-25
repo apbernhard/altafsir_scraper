@@ -35,7 +35,7 @@ class altafsir_extractor:
 
         # Extracts Text from HTML and saves to file
         print(f"Writing to {self.TafsirId}_{self.Sura}_{self.Aya}.txt")
-        with open(f"{path}{self.TafsirId}_{self.Sura}_{self.Aya}.txt", "w", encoding="utf-8") as f:
+        with open(f"{path}{self.TafsirId}-{self.Sura}_{self.Aya}.txt", "w", encoding="utf-8") as f:
             f.write(self.Text)
         print("Saved file successfully")
         return None
