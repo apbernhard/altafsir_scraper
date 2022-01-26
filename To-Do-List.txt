@@ -2,9 +2,3 @@ Tasks:
 	#Include exception handling
 	#Testing
 	#Storing data
-	POS-Häufigkeiten
-
-
-Grafik beschreiben
-Lösungen rausnehmen
-korrigieren
