@@ -1,4 +1,0 @@
-Tasks:
-	#Include exception handling
-	#Testing
-	#Storing data
