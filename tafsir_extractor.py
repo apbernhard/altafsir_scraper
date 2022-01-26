@@ -2,7 +2,7 @@
 
 
 # Creating a Base class
-class altafsir_extractor:
+class tafsir_sample:
     def __init__(self, TafsirId, Sura, Aya):
         self.TafsirId = TafsirId
         self.Sura = Sura
