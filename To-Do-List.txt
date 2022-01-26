@@ -2,19 +2,12 @@ Tasks:
 	#Include exception handling
 	#Testing
 	#Storing data
-	Disambig copy to variable
 	POS-Häufigkeiten
-	Datei-Import
 
 
 Aufgaben:
-	Listen
-	Dictioniaries
-	Serien und Dataframes
-	Webscraping mit BeautifulSoup
 	Schleifen
 	Conditional Statements
-	RegEx
-	Import von Modulen
-	Klassen
-	help-Funktion
+
+	Filename
+		aus Variablen bilden
