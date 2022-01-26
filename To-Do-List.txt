@@ -5,7 +5,6 @@ Tasks:
 	POS-Häufigkeiten
 
 
-Text farbig markieren
 Grafik beschreiben
 Lösungen rausnehmen
 korrigieren
