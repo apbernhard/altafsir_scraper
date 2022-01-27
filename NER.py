@@ -13,13 +13,20 @@ def NER_getter(TokenizedList):
     # save each token paired with it's NER label
     zipped = list(zip(sentence, labels))
 
-    print(labels)
     # Filter and glue named entities into dictionary
     named_entities = {"LOC": [], "ORG": [], "PERS": [], "MISC": []}
-    for i, val in enumerate(zipped):
-        if zipped[i][1][0] == "B":
-            named_entities[zipped[i][1][2:]].append(zipped[i][0])
-        if zipped[i][1][0] == "I":
-            named_entities[zipped[i][1][2:]][-1] = named_entities[zipped[i]
-                                                                  [1][2:]][-1] + " " + zipped[i][0]
+
+    for i, name in enumerate(zipped):
+        writer = ""
+        x = 1
+        if name[1][0] == "B":
+            writer = name[0]
+            if zipped[i+x][1][0] == "I":
+                while zipped[i+x][1][0] == "I":
+                    writer += " " + zipped[i+x][0]
+                    x += 1
+            else:
+                pass
+            named_entities[zipped[i][1][2:]].append(writer)
+
     return named_entities
