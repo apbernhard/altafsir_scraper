@@ -13,7 +13,7 @@ class tafsir_sample:
 # Declaring public methods
     def collect_data(self):
         """collects given Aya from Sura from a specified Tafsir
-           returns: string"""
+           returns: None"""
 
         # check validity of request
         if self.__get_soup(1).select_one("#SearchResults div") == None:
@@ -26,8 +26,8 @@ class tafsir_sample:
             # join list entries to plain text
             self.Text = "\n".join(
                 [i for i in [i.get_text().strip() for i in self.Code]])
-            # returns list
-            return
+
+            return None
 
     def write_data(self, path="./data/"):
         """extracts scraping result to text file
@@ -104,7 +104,7 @@ def runscript():
 
     # Fetch data
     print(f"fetching Tafsir {TafsirId}, Sura {Sura}, Aya {Aya}")
-    object = altafsir_extractor(TafsirId, Sura, Aya)
+    object = tafsir_sample(TafsirId, Sura, Aya)
     object.collect_data()
 
     # Output
