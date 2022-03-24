@@ -53,7 +53,7 @@ def __remove_ref(text):
 def __remove_eulogies(text):
     """Entfernt Eulogien (Segenssprüche) aus dem Text"""
     
-    with open("./assets/eulogies.txt", encoding="utf-8") as f:
+    with open("./assets/filter/eulogies.txt", encoding="utf-8") as f:
         eulogies = f.read().splitlines()
     
     for eulogy in eulogies:
