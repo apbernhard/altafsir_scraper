@@ -18,7 +18,7 @@ class tafsir_sample:
            returns: string"""
         import json
 
-        mypath = "C:\\Users\\Adrian\\sciebo\\Masterarbeit\\Korpus\\altafsir\\"
+        mypath = "C:\\Users\\Adrian\\sciebo\\Masterarbeit\\Korpus\\altafsir-kabikaj\\altafsir\\"
 
         # check validity of request
         # if sura is represented in korpus_aya_uebersicht.csv:
